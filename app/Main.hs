@@ -4,13 +4,7 @@ import Graphics.Gloss
 import Graphics.Gloss.Interface.Pure.Simulate
 
 window :: Display
-window = InWindow "Nice Window" (200, 200) (10, 10)
-
-modelToPicture :: Float -> Picture
-modelToPicture size = circle size
-
---stepIteration :: ViewPort -> Float -> Model -> Model
---stepIteration _ time model = size model + 1
+window = InWindow "Ant Simulation" (200, 200) (10, 10)
 
 data Model = Model {
     size :: Float
@@ -21,7 +15,11 @@ model = Model {
     size = 80
 }
 
+modelToPicture :: Model -> Picture
+modelToPicture model = Circle $ size model
+
+stepIteration :: ViewPort -> Float -> Model -> Model
+stepIteration _ time model = model { size = size model + 1 }
+
 main :: IO ()
---main = simulate window white model modelToPicture stepIteration
-main = do
-    display window white $ modelToPicture $ size model
+main = simulate window white 15 model modelToPicture stepIteration
