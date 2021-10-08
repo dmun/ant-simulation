@@ -28,11 +28,9 @@ model = Model { ants = [ant, ant2] }
 
 drawModel :: Model -> Picture
 drawModel model =
-    translate (x (ants model !! 0)) (y (ants model !! 0))
-        $  circleSolid
-        $  size
-        $  ants model
-        !! 0
+    pictures
+        $ map (\ant -> translate (x ant) (y ant) $ circleSolid $ size ant)
+        $ ants model
 
 simulateModel :: ViewPort -> Float -> Model -> Model
 simulateModel _ time model = Model { ants = ants' }
