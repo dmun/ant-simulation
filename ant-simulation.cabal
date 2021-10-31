@@ -40,6 +40,7 @@ executable ant-simulation-exe
   main-is: Main.hs
   other-modules:
       Ant
+      Food
       Model
       Utils
       Paths_ant_simulation

@@ -11,20 +11,16 @@ data Ant = Ant
     , velocity :: Float
     }
 
-initAnts :: (Int, Int) -> (Int, Int) -> Int -> IO [Ant]
-initAnts (lx, ly) (hx, hy) n = forM
+initAnts :: Int -> IO [Ant]
+initAnts n = forM
     [1 .. n]
     (\_ -> do
-        x        <- getRandom (rtf lx) (rtf hx)
-        y        <- getRandom (rtf ly) (rtf hy)
-        size     <- getRandom 2 10
         angle    <- getRandom 0 360
         velocity <- getRandom 2 10
-        return $ Ant { x        = x
-                     , y        = y
-                     , size     = size
+        return $ Ant { x        = 0
+                     , y        = 0
+                     , size     = 3
                      , angle    = angle
                      , velocity = velocity
                      }
     )
-    where rtf = realToFrac

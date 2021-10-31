@@ -4,22 +4,25 @@ import           Graphics.Gloss
 import           Graphics.Gloss.Interface.Pure.Simulate
 
 import           Ant
+import           Food
 
 data Model = Model
     { ants :: [Ant]
+    , food :: [Food]
     }
 
-initModel :: [Ant] -> Model
-initModel ants = Model { ants = ants }
+initModel :: [Ant] -> [Food] -> Model
+initModel ants food = Model { ants = ants, food = food }
 
-drawModel :: Model -> Picture
-drawModel model =
-    pictures
-        $ map (\ant -> translate (x ant) (y ant) $ circleSolid $ size ant)
-        $ ants model
+renderModel :: Model -> Picture
+renderModel model =
+    pictures $ ant' ++ food' ++ [text $ show $ fx (food model !! 4)]
+    where
+        ant'  = map (\ant -> translate (x ant) (y ant) $ color black $ circleSolid $ size ant) $ ants model
+        food' = map (\food -> translate (fx food) (fy food) $ color green $ circleSolid $ fsize food) $ food model
 
 simulateModel :: ViewPort -> Float -> Model -> Model
-simulateModel _ time model = Model { ants = ants' }
+simulateModel _ time model = Model { ants = ants', food = food' }
   where
     ants' =
         map
@@ -29,3 +32,4 @@ simulateModel _ time model = Model { ants = ants' }
                     }
                 )
             $ ants model
+    food' = food model
