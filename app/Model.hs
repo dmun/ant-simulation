@@ -16,10 +16,14 @@ initModel ants food = Model { ants = ants, food = food }
 
 renderModel :: Model -> Picture
 renderModel model =
-    pictures $ ant' ++ food' ++ [text $ show $ fx (food model !! 4)]
+    pictures $ box' ++ ant' ++ food' ++ [text $ show $ fx (food model !! 4)]
     where
         ant'  = map (\ant -> translate (x ant) (y ant) $ color black $ circleSolid $ size ant) $ ants model
         food' = map (\food -> translate (fx food) (fy food) $ color green $ circleSolid $ fsize food) $ food model
+        box'  = [box 800 800]
+
+box :: Float -> Float -> Picture
+box width height = color (makeColorI 149 165 166 255) $ rectangleSolid width height
 
 simulateModel :: ViewPort -> Float -> Model -> Model
 simulateModel _ time model = Model { ants = ants', food = food' }
