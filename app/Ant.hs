@@ -16,7 +16,7 @@ initAnts n = forM
     [1 .. n]
     (\_ -> do
         angle    <- getRandom 0 360
-        velocity <- getRandom 2 10
+        velocity <- getRandom 1 3
         return $ Ant { x        = 0
                      , y        = 0
                      , size     = 3

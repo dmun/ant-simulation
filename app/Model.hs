@@ -30,10 +30,27 @@ simulateModel _ time model = Model { ants = ants', food = food' }
   where
     ants' =
         map
-                (\ant -> ant
-                    { x = x ant + (sin $ angle ant * (pi / 180)) * velocity ant
-                    , y = y ant + (cos $ angle ant * (pi / 180)) * velocity ant
-                    }
-                )
+                (\ant -> moveAnt ant)
             $ ants model
     food' = food model
+
+moveAnt :: Ant -> Ant
+moveAnt ant =
+    containAnt ant { x = x ant + xOffset * velocity ant
+                    , y = y ant + yOffset * velocity ant
+                    } 10 10
+    where (xOffset, yOffset) = calcOffset $ angle ant
+
+containAnt :: Ant -> Float -> Float -> Ant
+containAnt ant borderLimit rotationSpeed =
+    if (x ant + xOffset * (velocity ant) * borderLimit > 400 && angle ant > 0 && angle ant < 180) then ant { angle = angle ant + rotationSpeed}
+    else if (x ant + xOffset * (velocity ant) * borderLimit < -400 && angle ant > 180 && angle ant < 360) then ant { angle = angle ant + rotationSpeed}
+    else if (y ant + yOffset * (velocity ant) * borderLimit > 400) then ant { angle = angle ant + rotationSpeed }
+    else if (y ant + yOffset * (velocity ant) * borderLimit < -400) then ant { angle = angle ant + rotationSpeed }
+    else ant
+    where (xOffset, yOffset) = calcOffset $ angle ant
+
+calcOffset :: Float -> (Float, Float)
+calcOffset angle = ( sin $ angle * (pi / 180)
+                  , cos $ angle * (pi / 180)
+                  )
