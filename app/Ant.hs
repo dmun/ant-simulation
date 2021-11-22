@@ -24,3 +24,6 @@ initAnts n = forM
                      , velocity = velocity
                      }
     )
+
+--turnAnt :: Ant -> Float -> Ant
+--turnAnt ant degrees = ant { angle = (angle ant + degrees) `mod` 360 }

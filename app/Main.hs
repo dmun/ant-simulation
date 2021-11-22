@@ -13,7 +13,7 @@ window = InWindow "Ant Simulation" (200, 200) (10, 10)
 
 main :: IO ()
 main = do
-    ants <- liftIO $ initAnts 1000
+    ants <- liftIO $ initAnts 50
     food <- liftIO $ initFood (-400, 400) (-400, 400) 10
     --let food = initFood (-400, 400) (-400, 400) 10 getStdGen
     simulate window background 30 (initModel ants food) renderModel simulateModel

@@ -42,6 +42,7 @@ executable ant-simulation-exe
       Ant
       Food
       Model
+      Trail
       Utils
       Paths_ant_simulation
   hs-source-dirs:
